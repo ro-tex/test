@@ -32,6 +32,9 @@ changelog:
 brews:
     -
         name: test
+        alternative_names:
+          - test@{{ .Version }}
+          - test@{{ .Major }}
         description: "test is simple tool that outputs the test lines of its input"
         homepage: "https://github.com/ro-tex/test"
         license: "MIT"

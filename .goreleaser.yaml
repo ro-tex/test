@@ -1,0 +1,103 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+
+archives:
+  - format: tar.gz
+    # this name template makes the OS and Arch compatible with the results of uname.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+brews:
+    -
+        name: test@{{ .Major }}.{{ .Minor }}.{{ .Patch }}
+        description: "test is simple tool that outputs the test lines of its input"
+        homepage: "https://github.com/ro-tex/test"
+        license: "MIT"
+        folder: Formula
+        download_strategy: CurlDownloadStrategy
+        tap:
+            owner: ro-tex
+            name: homebrew-test
+            branch: main
+        url_template: "https://github.com/ro-tex/test/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+        commit_author:
+            name: goreleaserbot
+            email: bot@goreleaser.com
+        commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+        dependencies:
+            - name: go
+        test: |
+            system "#{bin}/test --help"
+            # ...
+        install: |
+            ENV["GOPATH"] = buildpath
+
+            bin_path = buildpath/"src/github.com/ro-tex/test"
+            bin_path.install Dir["*"]
+            cd bin_path do
+                system "go", "build", "-o", bin/"test", "."
+            end
+            # ...
+        repository:
+            owner: ro-tex
+            name: homebrew-test
+            branch: main
+            token: "{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}"
+
+            # Clone, create the file, commit and push, to a regular Git repository.
+            #
+            # Notice that this will only have any effect if the given URL is not
+            # empty.
+            #
+            # Since: v1.18
+            git:
+                # The Git URL to push.
+                #
+                # Templates: allowed
+                url: 'ssh://git@github.com:ro-tex/test.git'
+
+                # The SSH private key that should be used to commit to the Git
+                # repository.
+                # This can either be a path or the key contents.
+                #
+                # IMPORTANT: the key must not be password-protected.
+                #
+                # WARNING: do not expose your private key in the configuration file!
+                #
+                # Templates: allowed
+                private_key: '{{ .Env.PRIVATE_KEY_PATH }}'
+
+                # The value to be passed to `GIT_SSH_COMMAND`.
+                # This is mainly used to specify the SSH private key used to pull/push
+                # to the Git URL.
+                #
+                # Default: 'ssh -i {{ .KeyPath }} -o StrictHostKeyChecking=accept-new -F /dev/null'
+                # Templates: allowed
+                ssh_command: 'ssh -i {{ .Env.KEY }} -o SomeOption=yes'
+
+# The lines beneath this are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj

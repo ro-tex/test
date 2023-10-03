@@ -72,7 +72,7 @@ brews:
                 # The Git URL to push.
                 #
                 # Templates: allowed
-                url: 'https://github.com/ro-tex/test.git'
+                url: 'https://github.com/ro-tex/homebrew-test.git'
 
                 # The SSH private key that should be used to commit to the Git
                 # repository.

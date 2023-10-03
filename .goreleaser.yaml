@@ -92,7 +92,7 @@ brews:
                 #
                 # Default: 'ssh -i {{ .KeyPath }} -o StrictHostKeyChecking=accept-new -F /dev/null'
                 # Templates: allowed
-                ssh_command: 'ssh -i {{ .Env.KEY }} -o SomeOption=yes'
+                ssh_command: 'ssh -i /Users/inovakov/.ssh/id_ed25519 -o SomeOption=yes'
 
 # The lines beneath this are called `modelines`. See `:help modeline`
 # Feel free to remove those if you don't want/use them.

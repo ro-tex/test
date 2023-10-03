@@ -83,7 +83,7 @@ brews:
                 # WARNING: do not expose your private key in the configuration file!
                 #
                 # Templates: allowed
-                private_key: '{{ .Env.PRIVATE_KEY_PATH }}'
+                private_key: '{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}'
 
                 # The value to be passed to `GIT_SSH_COMMAND`.
                 # This is mainly used to specify the SSH private key used to pull/push

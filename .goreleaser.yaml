@@ -1,7 +1,6 @@
 before:
   hooks:
     - go mod tidy
-
 builds:
   -
     binary: test
@@ -10,16 +9,6 @@ builds:
     goos:
       - linux
       - darwin
-# archives:
-#   - format: tar.gz
-#     # this name template makes the OS and Arch compatible with the results of uname.
-#     name_template: >-
-#       {{ .ProjectName }}_
-#       {{- title .Os }}_
-#       {{- if eq .Arch "amd64" }}x86_64
-#       {{- else if eq .Arch "386" }}i386
-#       {{- else }}{{ .Arch }}{{ end }}
-#       {{- if .Arm }}v{{ .Arm }}{{ end }}
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
@@ -34,12 +23,12 @@ brews:
         name: test
         alternative_names:
           - test@{{ .Version }}
+          - test@{{ .Major }}.{{ .Minor }}
           - test@{{ .Major }}
-        description: "test is simple tool that outputs the test lines of its input"
+        description: "Outputs the test lines of its input"
         homepage: "https://github.com/ro-tex/test"
         license: "MIT"
         folder: Formula
-        download_strategy: CurlDownloadStrategy
         url_template: "https://github.com/ro-tex/test/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
         commit_author:
             name: goreleaserbot
@@ -52,7 +41,6 @@ brews:
         #     # ...
         # install: |
         #     ENV["GOPATH"] = buildpath
-
         #     bin_path = buildpath/"src/github.com/ro-tex/test"
         #     bin_path.install Dir["*"]
         #     cd bin_path do
@@ -64,37 +52,9 @@ brews:
             name: homebrew-test
             branch: main
             token: "{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}"
-
-            # Clone, create the file, commit and push, to a regular Git repository.
-            #
-            # Notice that this will only have any effect if the given URL is not
-            # empty.
-            #
-            # Since: v1.18
             git:
-                # The Git URL to push.
-                #
-                # Templates: allowed
                 url: 'https://github.com/ro-tex/homebrew-test.git'
-
-                # The SSH private key that should be used to commit to the Git
-                # repository.
-                # This can either be a path or the key contents.
-                #
-                # IMPORTANT: the key must not be password-protected.
-                #
-                # WARNING: do not expose your private key in the configuration file!
-                #
-                # Templates: allowed
-                #{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}
                 private_key: '/Users/inovakov/.ssh/id_ed25519'
-
-                # The value to be passed to `GIT_SSH_COMMAND`.
-                # This is mainly used to specify the SSH private key used to pull/push
-                # to the Git URL.
-                #
-                # Default: 'ssh -i {{ .KeyPath }} -o StrictHostKeyChecking=accept-new -F /dev/null'
-                # Templates: allowed
                 ssh_command: 'ssh -i /Users/inovakov/.ssh/id_ed25519 -o SomeOption=yes'
 
 # The lines beneath this are called `modelines`. See `:help modeline`

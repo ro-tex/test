@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "release": "goreleaser release --clean",
-    "tag": "npx changeset version && npx changeset tag"
+    "tag": "npx changeset version && npx changeset tag",
+    "noop": "echo 'noop'"
   },
   "author": "",
   "license": "ISC",

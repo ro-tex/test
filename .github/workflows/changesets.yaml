@@ -63,7 +63,7 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --clean --config .goreleaser-cli.yaml
+          args: release --clean --config .goreleaser.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution

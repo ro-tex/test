@@ -15,7 +15,6 @@ jobs:
     permissions:
       contents: write # see https://stackoverflow.com/a/76645503
       pull-requests: write
-#      repository-projects: write
     name: Release
     runs-on: ubuntu-latest
     steps:

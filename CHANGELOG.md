@@ -1,5 +1,11 @@
 # test
 
+## 1.1.6
+
+### Patch Changes
+
+- 54f96ab: mark the release as true
+
 ## 1.1.5
 
 ### Patch Changes

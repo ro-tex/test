@@ -1,0 +1,5 @@
+---
+"test": patch
+---
+
+fix publish

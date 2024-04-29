@@ -33,7 +33,7 @@ jobs:
         with:
           publish:
             # echo "mark as released!" # This is only here to mark the publishing step and done, so steps.changesets.outputs.published can be true
-            npx changesets tag
+            npx changesets/cli tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

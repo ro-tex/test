@@ -1,0 +1,41 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  -
+    binary: test
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^dist:'
+      - '^node_modules:'
+
+brews:
+    -
+        name: test
+        description: "Outputs the test lines of its input"
+        homepage: "https://github.com/ro-tex/test"
+        license: "MIT"
+        folder: Formula
+        url_template: "https://github.com/ro-tex/test/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+        commit_author:
+            name: goreleaserbot
+            email: bot@goreleaser.com
+        commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+        repository:
+            owner: ro-tex
+            name: homebrew-test
+            branch: main
+            token: "{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}"
+            git:
+                url: 'https://github.com/ro-tex/homebrew-test.git'
+                private_key: '{{ secrets.HOMEBREW_SSH_KEY }}'
+#                ssh_command: 'ssh -i {{ secrets.HOMEBREW_SSH_KEY }} -o SomeOption=yes'

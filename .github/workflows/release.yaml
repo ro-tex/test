@@ -9,6 +9,8 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
+    permissions:
+      contents: write # see https://stackoverflow.com/a/76645503
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -24,12 +26,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-#      - name: Set up Go
-#        uses: actions/setup-go@v4
+      #      - name: Set up Go
+      #        uses: actions/setup-go@v4
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
-#        publish:
-#          goreleaser release --clean
+        #        publish:
+        #          goreleaser release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

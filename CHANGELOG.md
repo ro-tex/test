@@ -1,5 +1,11 @@
 # test
 
+## 1.1.14
+
+### Patch Changes
+
+- 5bdba4d: Release to homebrew via a release action.
+
 ## 1.1.13
 
 ### Patch Changes

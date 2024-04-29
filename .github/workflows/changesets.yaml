@@ -45,27 +45,41 @@ jobs:
       #      - name: Is a release!
       #        if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
       #        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
+      #
+      #      - name: Set up Go for GoReleaser
+      #        if: steps.changesets.outputs.hasChangesets == 'false'
+      #        uses: actions/setup-go@v4
+      #
+      #      - name: Run GoReleaser
+      #        if: steps.changesets.outputs.hasChangesets == 'false'
+      #        # This action will get triggered if we push to main and there are no changesets.
+      #        # This will cause an error because there will be no tag matching this commit. That tag is supposed to be created
+      #        # by the `publish` step of the `changesets` action. When this tag is missing and we encounter an error, we want
+      #        # to ignore it and continue.
+      #        continue-on-error: true
+      #        uses: goreleaser/goreleaser-action@v5
+      #        with:
+      #          distribution: goreleaser
+      #          version: latest
+      #          args: release --clean --config .goreleaser-ci.yaml
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # We need a special GitHub token here that can push to the homebrew repo.
+      #          HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
+      #          # export GORELEASER_CURRENT_TAG=v1.2.3
+      #          # export GORELEASER_PREVIOUS_TAG=v1.1.0
+      #          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
+      #          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
 
-#      - name: Set up Go for GoReleaser
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        uses: actions/setup-go@v4
-#
-#      - name: Run GoReleaser
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        # This action will get triggered if we push to main and there are no changesets.
-#        # This will cause an error because there will be no tag matching this commit. That tag is supposed to be created
-#        # by the `publish` step of the `changesets` action. When this tag is missing and we encounter an error, we want
-#        # to ignore it and continue.
-#        continue-on-error: true
-#        uses: goreleaser/goreleaser-action@v5
-#        with:
-#          distribution: goreleaser
-#          version: latest
-#          args: release --clean --config .goreleaser-ci.yaml
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # We need a special GitHub token here that can push to the homebrew repo.
-#          HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
-#          # export GORELEASER_CURRENT_TAG=v1.2.3
-#          # export GORELEASER_PREVIOUS_TAG=v1.1.0
-#          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
-#          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
+      - name: Nix build
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: nixbuild/nix-quick-install-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        run: nix build . && cp ./result/bin/test > test_linux
+
+      - name: Release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            test_linux

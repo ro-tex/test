@@ -31,7 +31,7 @@ jobs:
         uses: changesets/action@v1.4.7
         id: changesets
         with:
-          publish: npm run noop
+          publish: npm run tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,20 +69,3 @@ jobs:
       #          # export GORELEASER_PREVIOUS_TAG=v1.1.0
       #          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
       #          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
-
-      - name: Install Nix
-        #if: steps.changesets.outputs.hasChangesets == 'false'
-        uses: nixbuild/nix-quick-install-action@v27
-        with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Nix build
-        #if: steps.changesets.outputs.hasChangesets == 'false'
-        run: nix build . && cp ./result/bin/test test_linux
-
-      - name: Release
-        #if: steps.changesets.outputs.hasChangesets == 'false'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            test_linux

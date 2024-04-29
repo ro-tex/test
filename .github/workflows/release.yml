@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        #if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: nixbuild/nix-quick-install-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        #if: steps.changesets.outputs.hasChangesets == 'false'
+        run: nix build . && cp ./result/bin/test test_linux
+
+      - name: Release
+        #if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            test_linux

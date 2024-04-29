@@ -64,5 +64,7 @@ jobs:
           args: release --clean --config .goreleaser.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # export GORELEASER_CURRENT_TAG=v1.2.3
+          # export GORELEASER_PREVIOUS_TAG=v1.1.0
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
           # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}

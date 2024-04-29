@@ -1,5 +1,11 @@
 # test
 
+## 1.1.18
+
+### Patch Changes
+
+- 8c30903: release with a publish
+
 ## 1.1.17
 
 ### Patch Changes

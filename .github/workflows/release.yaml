@@ -8,7 +8,7 @@ on:
 # This is quite broad. We should narrow it down after reading https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
 #permissions: write-all
 
-# TODO Re-enable this: concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
@@ -38,4 +38,4 @@ jobs:
         #        publish:
         #          goreleaser release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

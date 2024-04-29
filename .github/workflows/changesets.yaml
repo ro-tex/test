@@ -30,16 +30,20 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1.4.7
         id: changesets
-#        with:
-#          publish:
-#            npm release
+        #        with:
+        #          publish:
+        #            npm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Publish
-#        if: steps.changesets.outputs.hasChangesets == 'false'
-#        # You can do something when a publish should happen.
-#        run: yarn publish
+      #      - name: Publish
+      #        if: steps.changesets.outputs.hasChangesets == 'false'
+      #        # You can do something when a publish should happen.
+      #        run: yarn publish
+
+      - name: Not a release!
+        if: steps.changesets.outputs.hasChangesets == 'true'
+        run: echo "No release will be made."
 
       - name: Set up Go
         if: steps.changesets.outputs.hasChangesets == 'false'

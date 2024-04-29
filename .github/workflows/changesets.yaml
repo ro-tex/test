@@ -43,7 +43,11 @@ jobs:
 
       - name: Not a release!
         if: steps.changesets.outputs.hasChangesets == 'true'
-        run: echo "No release will be made."
+        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
+
+      - name: Is a release!
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
 
       - name: Set up Go
         if: steps.changesets.outputs.hasChangesets == 'false'

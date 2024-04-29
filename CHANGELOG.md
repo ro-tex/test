@@ -1,5 +1,11 @@
 # test
 
+## 1.1.19
+
+### Patch Changes
+
+- 70e2529: add nix build
+
 ## 1.1.18
 
 ### Patch Changes

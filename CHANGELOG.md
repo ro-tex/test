@@ -1,5 +1,11 @@
 # test
 
+## 1.1.9
+
+### Patch Changes
+
+- 037cd1d: tagging again
+
 ## 1.1.8
 
 ### Patch Changes

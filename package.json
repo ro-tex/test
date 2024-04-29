@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "release": "goreleaser release --clean",
-    "tag": "npx changesets/cli version && npx changesets/cli tag"
+    "tag": "npx changeset version && npx changeset tag"
   },
   "author": "",
   "license": "ISC",

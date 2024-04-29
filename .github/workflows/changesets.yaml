@@ -70,11 +70,13 @@ jobs:
       #          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
       #          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
 
-      - name: Nix build
+      - name: Install Nix
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: nixbuild/nix-quick-install-action@v27
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Nix build
         run: nix build . && cp ./result/bin/test > test_linux
 
       - name: Release

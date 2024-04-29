@@ -37,5 +37,5 @@ brews:
             token: "{{ .Env.GITHUB_PERSONAL_AUTH_TOKEN }}"
             git:
                 url: 'https://github.com/ro-tex/homebrew-test.git'
-                private_key: '{{ secrets.HOMEBREW_SSH_KEY }}'
+                private_key: '{{ .Env.HOMEBREW_SSH_KEY }}'
 #                ssh_command: 'ssh -i {{ secrets.HOMEBREW_SSH_KEY }} -o SomeOption=yes'

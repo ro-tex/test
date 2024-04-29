@@ -8,11 +8,10 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
+  aggragate_changes_and_tag:
     permissions:
       contents: write # see https://stackoverflow.com/a/76645503
       pull-requests: write
-    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

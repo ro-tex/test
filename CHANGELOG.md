@@ -1,5 +1,11 @@
 # test
 
+## 1.1.17
+
+### Patch Changes
+
+- a392a48: release without a publish action
+
 ## 1.1.16
 
 ### Patch Changes

@@ -21,10 +21,6 @@ changelog:
 brews:
     -
         name: test
-        alternative_names:
-          - test@{{ .Version }}
-          - test@{{ .Major }}.{{ .Minor }}
-          - test@{{ .Major }}
         description: "Outputs the test lines of its input"
         homepage: "https://github.com/ro-tex/test"
         license: "MIT"
@@ -34,19 +30,6 @@ brews:
             name: goreleaserbot
             email: bot@goreleaser.com
         commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
-        dependencies:
-            - name: go
-        # test: |
-        #     system "#{bin}/test --help"
-        #     # ...
-        # install: |
-        #     ENV["GOPATH"] = buildpath
-        #     bin_path = buildpath/"src/github.com/ro-tex/test"
-        #     bin_path.install Dir["*"]
-        #     cd bin_path do
-        #         system "go", "build", "-o", bin/"test", "."
-        #     end
-        #     # ...
         repository:
             owner: ro-tex
             name: homebrew-test
@@ -56,8 +39,3 @@ brews:
                 url: 'https://github.com/ro-tex/homebrew-test.git'
                 private_key: '/Users/inovakov/.ssh/id_ed25519'
                 ssh_command: 'ssh -i /Users/inovakov/.ssh/id_ed25519 -o SomeOption=yes'
-
-# The lines beneath this are called `modelines`. See `:help modeline`
-# Feel free to remove those if you don't want/use them.
-# yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
-# vim: set ts=2 sw=2 tw=0 fo=cnqoj

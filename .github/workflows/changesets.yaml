@@ -30,8 +30,8 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1.4.7
         id: changesets
-        #        with:
-        #          publish: npm run noop
+        with:
+          publish: npm run noop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

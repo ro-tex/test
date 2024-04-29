@@ -3,7 +3,8 @@
   "version": "1.1.6",
   "main": "index.js",
   "scripts": {
-    "release": "goreleaser release --clean"
+    "release": "goreleaser release --clean",
+    "tag": "npx changesets/cli tag"
   },
   "author": "",
   "license": "ISC",

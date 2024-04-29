@@ -41,20 +41,23 @@ jobs:
       #        # You can do something when a publish should happen.
       #        run: yarn publish
 
+      - name: Is this a release?
+        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }}
+
       - name: Not a release!
-        if: steps.changesets.outputs.hasChangesets == 'true'
+        if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.publishedPackages[0]
         run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
 
       - name: Is a release!
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'false' && !steps.changesets.outputs.publishedPackages[0]
         run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
 
       - name: Set up Go
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'false' && !steps.changesets.outputs.publishedPackages[0]
         uses: actions/setup-go@v4
 
       - name: Run GoReleaser
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'false' && !steps.changesets.outputs.publishedPackages[0]
         uses: goreleaser/goreleaser-action@v5
         with:
           # either 'goreleaser' (default) or 'goreleaser-pro'

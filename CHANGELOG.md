@@ -1,5 +1,11 @@
 # test
 
+## 1.1.10
+
+### Patch Changes
+
+- f5e9c1f: fix publish
+
 ## 1.1.9
 
 ### Patch Changes

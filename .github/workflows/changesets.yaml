@@ -42,9 +42,7 @@ jobs:
       #        run: yarn publish
 
       - name: Is this a release?
-        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }} ; echo "publishedPackages[0] == null" ${{ steps.changesets.outputs.publishedPackages[0] == null }}
-
-
+        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "changesets" ${{ steps.changesets }} ; echo "outputs" ${{ steps.changesets.outputs }} ; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0] == null" ${{ steps.changesets.outputs.publishedPackages[0] == null }}
 
       - name: Not a release!
         if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.publishedPackages[0] == null

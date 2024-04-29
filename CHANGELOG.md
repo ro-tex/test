@@ -1,5 +1,11 @@
 # test
 
+## 1.1.11
+
+### Patch Changes
+
+- a019e06: version before tag
+
 ## 1.1.10
 
 ### Patch Changes

@@ -1,5 +1,0 @@
----
-"test": patch
----
-
-fix publish

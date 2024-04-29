@@ -15,8 +15,8 @@ changelog:
   sort: asc
   filters:
     exclude:
-      - '^docs:'
-      - '^test:'
+      - '^dist:'
+      - '^node_modules:'
 
 brews:
     -

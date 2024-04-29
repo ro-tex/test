@@ -24,7 +24,7 @@ brews:
         description: "Outputs the test lines of its input"
         homepage: "https://github.com/ro-tex/test"
         license: "MIT"
-        folder: Formula
+        directory: Formula
         url_template: "https://github.com/ro-tex/test/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
         commit_author:
             name: goreleaserbot

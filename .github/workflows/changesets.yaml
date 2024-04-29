@@ -35,16 +35,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Is this a release?
-#        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "changesets" ${{join(steps.changesets.outputs.*, '\n')}} ; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }} ; echo "version" ${{ steps.changesets.outputs.publishedPackages[0].version }} ; echo "pullRequestNumber" ${{ steps.changesets.outputs.pullRequestNumber }} ; echo "published" ${{ steps.changesets.outputs.published }}
-#
-#      - name: Not a release!
-#        if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.publishedPackages[0] == null
-#        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
-#
-#      - name: Is a release!
-#        if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
-#        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
+      #      - name: Is this a release?
+      #        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "changesets" ${{join(steps.changesets.outputs.*, '\n')}} ; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }} ; echo "version" ${{ steps.changesets.outputs.publishedPackages[0].version }} ; echo "pullRequestNumber" ${{ steps.changesets.outputs.pullRequestNumber }} ; echo "published" ${{ steps.changesets.outputs.published }}
+      #
+      #      - name: Not a release!
+      #        if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.publishedPackages[0] == null
+      #        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
+      #
+      #      - name: Is a release!
+      #        if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
+      #        run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
 
       - name: Set up Go for GoReleaser
         if: steps.changesets.outputs.hasChangesets == 'false'
@@ -63,7 +63,7 @@ jobs:
           version: latest
           args: release --clean --config .goreleaser-ci.yaml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # We need a special GitHub token here that can push to the homebrew repo.
           HOMEBREW_SSH_KEY: ${{ secrets.HOMEBREW_SSH_KEY }}
           # export GORELEASER_CURRENT_TAG=v1.2.3
           # export GORELEASER_PREVIOUS_TAG=v1.1.0

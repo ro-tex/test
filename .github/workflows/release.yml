@@ -24,7 +24,9 @@ jobs:
 
       - name: Release
         #if: steps.changesets.outputs.hasChangesets == 'false'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2 # https://github.com/softprops/action-gh-release
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             test_linux
+          prerelease: false

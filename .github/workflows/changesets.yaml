@@ -32,14 +32,10 @@ jobs:
         id: changesets
         with:
           publish:
-            echo "mark as released!" # This is only here to mark the publishing step and done, so steps.changesets.outputs.published can be true
+            # echo "mark as released!" # This is only here to mark the publishing step and done, so steps.changesets.outputs.published can be true
+            changesets tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      #      - name: Publish
-      #        if: steps.changesets.outputs.hasChangesets == 'false'
-      #        # You can do something when a publish should happen.
-      #        run: yarn publish
 
       - name: Is this a release?
         run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "changesets" ${{join(steps.changesets.outputs.*, '\n')}} ; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }} ; echo "version" ${{ steps.changesets.outputs.publishedPackages[0].version }} ; echo "pullRequestNumber" ${{ steps.changesets.outputs.pullRequestNumber }} ; echo "published" ${{ steps.changesets.outputs.published }}
@@ -52,19 +48,17 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
         run: echo steps.changesets.outputs.publishedPackages ; echo steps.changesets.outputs.publishedPackages[0].version ; echo ${{ steps.changesets.outputs.publishedPackages }} ; echo ${{ steps.changesets.outputs.publishedPackages[0] }}
 
-      - name: Set up Go
-        if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
+      - name: Set up Go for GoReleaser
+        if: steps.changesets.outputs.hasChangesets == 'false'
         uses: actions/setup-go@v4
 
       - name: Run GoReleaser
-        if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null
+        if: steps.changesets.outputs.hasChangesets == 'false'
         uses: goreleaser/goreleaser-action@v5
         with:
-          # either 'goreleaser' (default) or 'goreleaser-pro'
           distribution: goreleaser
-          # 'latest', 'nightly', or a semver
           version: latest
-          args: release --clean
+          args: release --clean --config .goreleaser-cli.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution

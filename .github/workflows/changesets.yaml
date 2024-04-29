@@ -27,11 +27,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-
       - name: Create Release Pull Request
         uses: changesets/action@v1.4.7
+        id: changesets
 #        with:
 #          publish:
 #            npm release
@@ -42,6 +40,10 @@ jobs:
 #        if: steps.changesets.outputs.hasChangesets == 'false'
 #        # You can do something when a publish should happen.
 #        run: yarn publish
+
+      - name: Set up Go
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: actions/setup-go@v4
 
       - name: Run GoReleaser
         if: steps.changesets.outputs.hasChangesets == 'false'

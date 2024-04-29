@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+# This is quite broad. We should narrow it down after reading https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+permissions: write-all
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:

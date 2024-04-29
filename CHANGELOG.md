@@ -1,5 +1,11 @@
 # test
 
+## 1.1.2
+
+### Patch Changes
+
+- 026a47c: a new changeset
+
 ## 1.1.1
 
 ### Patch Changes

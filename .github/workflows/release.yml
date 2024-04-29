@@ -24,9 +24,17 @@ jobs:
 
       - name: Release
         #if: steps.changesets.outputs.hasChangesets == 'false'
-        uses: softprops/action-gh-release@v2 # https://github.com/softprops/action-gh-release
+        #        uses: softprops/action-gh-release@v2 # https://github.com/softprops/action-gh-release
+        #        with:
+        #          token: ${{ secrets.GITHUB_TOKEN }}
+        #          files: |
+        #            test_linux
+        #          prerelease: false
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ github.ref_name }}
+          prerelease: false
+          title: "Something something darkside..."
           files: |
             test_linux
-          prerelease: false

@@ -43,12 +43,12 @@ jobs:
 
       - name: Is this a release?
         env:
-          hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
-          publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
-          publishedPackagesList: ${{ steps.changesets.outputs.publishedPackages[0] }}
-          isARelease: ${{ steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null }}
+          HAS_CHAGESETS: ${{ steps.changesets.outputs.hasChangesets }}
+          PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+          LIST: ${{ steps.changesets.outputs.publishedPackages[0] }}
+          RELEASE: ${{ steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.publishedPackages[0] != null }}
 #        run: echo "hasChangesets" ${{ steps.changesets.outputs.hasChangesets }}; echo "publishedPackages" ${{ steps.changesets.outputs.publishedPackages }} ; echo "publishedPackages[0]" ${{ steps.changesets.outputs.publishedPackages[0] }}
-        run: echo "hasChangesets" ${{ hasChangesets }}; echo "publishedPackages" ${{ publishedPackages }} ; echo "publishedPackages[0]" ${{ publishedPackagesList }} ; echo "is a release?" ${{ isARelease }}
+        run: echo "hasChangesets" ${{ HAS_CHAGESETS }}; echo "publishedPackages" ${{ PACKAGES }} ; echo "publishedPackages[0]" ${{ LIST }} ; echo "is a release?" ${{ RELEASE }}
 
 
 

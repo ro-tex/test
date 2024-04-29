@@ -1,5 +1,11 @@
 # test
 
+## 1.1.16
+
+### Patch Changes
+
+- 85a52a9: new GH token
+
 ## 1.1.15
 
 ### Patch Changes

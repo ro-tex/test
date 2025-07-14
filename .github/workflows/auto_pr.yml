@@ -1,0 +1,76 @@
+name: Create a PR from a new durable pipeline branch
+
+on:
+  push:
+    paths:
+      - "domains/data-streams/*/durable_pipelines/inputs/*.yaml"
+    branches:
+      - "gpp_auto/*"
+
+jobs:
+  create-pr:
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Identify and Process New Durable Pipeline Inputs
+        run: |
+          # Identify newly added files in the commit
+          echo "Listing all new files in the commit..."
+          FILES=$(git diff --diff-filter=A --name-only ${{ github.sha }}^!)
+          echo "$FILES"
+
+          # Find the new YAML file in the durable pipelines input directory
+          echo "Searching for new YAML file in 'durable_pipelines/inputs' directory..."
+          FILE_PATH=$(echo "$FILES" | grep 'durable_pipelines/inputs/.*\.yaml' | head -n 1)
+          echo "YAML file identified: $FILE_PATH"
+
+          if [ -z "$FILE_PATH" ]; then
+            echo "No new YAML file found in the commit."
+            exit 0
+          fi
+
+          # Check if the file actually exists
+          if [ ! -f "$FILE_PATH" ]; then
+            echo "Identified YAML file does not exist: $FILE_PATH"
+            exit 1
+          fi
+
+          # Optionally print the contents of the YAML file
+          echo "Contents of the YAML file:"
+          cat "$FILE_PATH"
+
+          # Extract data from the YAML file
+          ENVIRONMENT=$(yq e '.environment' "$FILE_PATH")
+          DOMAIN=$(yq e '.domain' "$FILE_PATH")
+          CHANGE_SET=$(yq e '.changesets | keys.[0]' "$FILE_PATH")
+
+          echo "Extracted values: Environment: $ENVIRONMENT, Domain: $DOMAIN, ChangeSet: $CHANGE_SET"
+
+          if [ -z "$ENVIRONMENT" ] || [ -z "$DOMAIN" ] || [ -z "$CHANGE_SET" ]; then
+            echo "Required data is missing in the YAML file."
+            exit 1
+          fi
+
+          PR_TITLE="AUTO: ${DOMAIN} - ${ENVIRONMENT} - ${CHANGE_SET}"
+          PR_BODY="${PR_TITLE}"
+
+          echo "PR Title: $PR_TITLE"
+          echo "PR Body: $PR_BODY"
+
+          # Create the PR
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

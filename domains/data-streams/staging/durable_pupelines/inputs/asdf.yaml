@@ -4,3 +4,4 @@ changesets:
   distribute_stream_jobs:
     payload:
       hello: world
+      foo: bar

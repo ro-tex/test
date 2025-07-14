@@ -3,7 +3,7 @@ name: Create a PR from a new durable pipeline branch
 on:
   push:
     paths:
-      - "domains/data-streams/**/durable_pipelines/inputs/**"
+      - "domains/data-streams/*/durable_pipelines/inputs/*.yaml"
     branches-ignore:
       - "main"
 

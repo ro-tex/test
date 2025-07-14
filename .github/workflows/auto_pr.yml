@@ -6,6 +6,7 @@ on:
       - "domains/data-streams/*/durable_pipelines/inputs/*.yaml"
     branches:
       - "gpp_auto/*"
+      - "test/*"
 
 jobs:
   create-pr:

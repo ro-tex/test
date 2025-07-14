@@ -71,6 +71,6 @@ jobs:
           echo "PR Body: $PR_BODY"
 
           # Create the PR
-          gh pr create --title "$PR_TITLE" --body "$PR_BODY""
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

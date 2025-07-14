@@ -57,14 +57,14 @@ jobs:
           DOMAIN=$(yq e '.domain' "$FILE_PATH")
           CHANGE_SET=$(yq e '.changesets | keys.[0]' "$FILE_PATH")
 
-          echo "Extracted values: Environment: ENVIRONMENT, Domain: DOMAIN, ChangeSet: CHANGE_SET"
+          echo "Extracted values: Environment: $ENVIRONMENT, Domain: $DOMAIN, ChangeSet: $CHANGE_SET"
 
-          if [ -z "ENVIRONMENT" ] || [ -z "DOMAIN" ] || [ -z "CHANGE_SET" ]; then
+          if [ -z "$ENVIRONMENT" ] || [ -z "$DOMAIN" ] || [ -z "$CHANGE_SET" ]; then
             echo "Required data is missing in the YAML file."
             exit 1
           fi
 
-          PR_TITLE="AUTO: ${DOMAIN} - ${ENVIRONMENT} - \`${CHANGE_SET}\`"
+          PR_TITLE="AUTO: ${DOMAIN} - ${ENVIRONMENT} - ${CHANGE_SET}"
           PR_BODY="${PR_TITLE}"
 
           echo "PR Title: $PR_TITLE"

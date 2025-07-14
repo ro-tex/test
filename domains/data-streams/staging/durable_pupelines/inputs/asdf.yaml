@@ -1,0 +1,6 @@
+environment: staging
+domain: data-streams
+changesets:
+  distribute_stream_jobs:
+    payload:
+      hello: world
